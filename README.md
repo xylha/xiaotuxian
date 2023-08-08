@@ -6,7 +6,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-# 黑马小兔鲜电商项目：
+ 仿电商项目：
     1. 新建了apis -- 放接口, composables -- 放组合式函数， directives -- 全局自定义指令，styles, utils-- 工具
     2. 新建jsconfig.json文件，在里面配置 @/xx 路径提示。（这里只是提示，真正把 @/转化为src/的，是在vite.config.js里的resolve处）
     3. 引入 Element-plus （文档）
