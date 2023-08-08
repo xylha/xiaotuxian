@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1. 文件：index.html是唯一的入口文件，src/main.js把App.vue渲染到index.html中， App.vue是需要渲染的内容 -->
+    <!-- 2. 每个组件文件都是以.vue结尾。组件中包含 <templete>, <script>, <style>标签。
+            templete: 中写渲染的东西，各种指令也是可以用的
+            script: 默认是export default {}格式，可以给个name: 'MyApp'，自定义这个组件的名字，放data(){}, methods等东西
+            style: 这个组件的样式, 默认是css， 如果想用less， <style lang='less'>（需要npm i less -D vue-cli创建的不用安装，vite创建的需要）
+     -->
+     <!-- 
+        全局组件，局部组件：(组件在使用之前需要注册)
+            全局组件创建：
+                1. 先在main.js文件中，引入那个组件，再xxx.component('MyApp', Test)第一个参数写使用名字，第二个参数写引入时候的名字
+            局部注册：
+                先引入，在需要使用的组件的那个文件的<script>中，component: { 'MyApp', Test }，在templete标签中使用时<MyApp>
+
+            
+            
+            当然，在写组件的时候已经在script中写了name， 那么注册的时候，也可以直接使用这个name来作为名字
+              比如：创建了一个文件：Test.vue，里面<script>export default { name: 'MyTest' }</script>
+              注册组件的时候：引入 import Test from './Test.vue'，app.component(Test.name, Test)， 使用就直接<MyTest></MyTest>
+    -->
+    <!-- 
+        组件之间样式冲突：
+            给组件中的style标签添加一个scoped属性<style scoped>。
+            原理就是：给每个组件中的标签添加了一个随机字符串<p data-001>在style中以属性选择器来渲染css， p[data-001] {color: red}
+        
+            父组件中对子组件设置样式是不生效的，要想对子组件生效，需要使用deep，
+                vue2是：/deep/ .title {color: blue}
+                vue3是：:deep(.title) {color: blue}
+     -->
+     <!-- 
+        组件传递props: 
+            在组件的<script>标签中, 与name同级，props: ['xxxx', 'aaaa']，在templete中可是使用这些{{ xxx }}，引入这个组件后，可以传值<MyTest xxxx="ddd" aaaa='bbb'>
+            如果子组件中没有声明一个属性，比如ccc，那么父组件传递过来的props中如果有ccc，子组件会忽略
+        动态绑定props值：
+            在父组件传递时只需要加个冒号（v-bind）<MyTest :xxxx="info.abx">，info是声明好的一个对象，abx是其中一个属性
+      -->
+      <!-- 
+        动态绑定class：
+            使用 :class="xxx ? '11' : '22'"，通过v-bind来动态绑定class，三元表达式效果
+            以数组形式动态绑定class--   :class="[xxx ? '11': '22', vvv ? '33' : '44']"， 一个数组中可以写多个三元表达式
+            以对象方式 绑定class，以数组形式避免臃肿，直接 :class="classObj"， 在data中声明一个classObj对象，里面放键值对，对应true或false
+
+            以对象方式绑定内联style，现在data里声明好如：active: 'red', fsize: 30，在dom标签里直接<div :style="{color: active, fontSize: fsize + 'px'}" >
+       -->
+    <!-- 
+        props验证：
+            props: ['title', 'count']， 无法固定类型，需要使用props对象
+            props: {
+                title: [String, Number], // 可以是多个类型
+                count: Number, // 固定为Number类型
+                propB: {
+                    type: String,
+                    required: true, // 控制必传
+                },
+                propC: {
+                    type: Number,
+                    default: 100, // 自定义默认值
+                },
+                // 自定义验证函数
+                propD: {
+                    // value为传过来的 propD, 函数名必须为validator
+                    validator(value) {
+                        // 返回值为true表示通过，为false表示不通过
+                        return ['success', 'error', 'warning'].indexOf(value) !== -1
+                    }
+                }
+            }
+
+    -->
+</body>
+</html>
